@@ -22,3 +22,23 @@ In a repository's `renovate.json`:
 - The automerge matchRepositories list is security-critical: only repos with required status checks; review on every change.
 
 Config errors surface as issues via the Renovate Dependency Dashboard in each consuming repository.
+
+## Rollout state (2026-11-24)
+
+Consumers (extend this preset, renovate.json on main):
+hlw, llm-gateway-proxy, mysql-galera, fritzbox-skill, duckophila, weather-mcp-server, docker-reg-tool, helm-mcpo, playwright-skill.
+
+Excluded on purpose (no Renovate):
+- homebrew-tap - tap formulae are hand-bumped against upstream releases.
+- apps - TrueNAS catalog fork with its own renovate config.
+- open-webui-pr - fork; updates arrive via upstream syncs.
+- docker_compose-harbor - harbor decommission in progress.
+- blend_images_pipeline, blend_faces_pipeline - near-zero-churn utility scripts.
+- microduck - fork; deps come from upstream.
+- convert-xlsx-to-pdf, artifactory-client, build-pipeline-plugin - archived.
+
+Pending migration:
+- claude-memory, claude-memory-ui, apps - self-hosted renovate.yml + RENOVATE_TOKEN PAT, to be retired and switched here (separate ticket).
+- harness-control-center, claude-bridge (+ coder-templates) - dependabot today, migrate via q59v.
+
+STATUS: BLOCKED - the Mend Renovate app installation has been inactive account-wide since 2026-01 (no renovate[bot] activity anywhere; last bot PRs merged 2026-01-19). All configs above go live automatically once the installation is re-activated at github.com/settings/installations.
