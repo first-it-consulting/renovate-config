@@ -18,6 +18,7 @@ In a repository's `renovate.json`:
 - Rate limits: max 2 PRs/hour, max 5 open PRs; Dependency Dashboard enabled; PRs labeled `dependencies`.
 - minor+patch updates are grouped per ecosystem (one PR per manager); docker and github-actions groups also cover digest/pinDigest bumps.
 - github-actions action refs are pinned to commit digests.
-- Automerge (minor/patch/digest, platform-native merge queue) is enabled ONLY for repositories listed in the automerge packageRule - these have required status checks on their default branch; extend that list as branch protection rolls out. Major updates are never automerged.
+- Automerge (minor/patch only, platform-native merge queue) is enabled ONLY for repositories listed in the automerge packageRule - these have required status checks on their default branch; extend that list as branch protection rolls out. Digest/pinDigest bumps are grouped but never automerged. Major updates are never automerged.
+- The automerge matchRepositories list is security-critical: only repos with required status checks; review on every change.
 
 Config errors surface as issues via the Renovate Dependency Dashboard in each consuming repository.

@@ -113,7 +113,7 @@
       "groupName": "java minor and patch"
     },
     {
-      "description": "Automerge minor/patch ONLY in repos that have required status checks on the default branch (branch protection). Extend matchRepositories as protection rolls out.",
+      "description": "Automerge minor/patch ONLY in repos that have required status checks on the default branch (branch protection). Digest/pinDigest bumps are deliberately NOT automerged - they need human review. Extend matchRepositories as protection rolls out.",
       "matchRepositories": [
         "first-it-consulting/harness-control-center",
         "first-it-consulting/llm-gateway-proxy",
@@ -121,9 +121,7 @@
       ],
       "matchUpdateTypes": [
         "minor",
-        "patch",
-        "digest",
-        "pinDigest"
+        "patch"
       ],
       "automerge": true,
       "platformAutomerge": true
