@@ -30,7 +30,7 @@ hlw, llm-gateway-proxy, mysql-galera, fritzbox-skill, duckophila, weather-mcp-se
 
 Excluded on purpose (no Renovate):
 - homebrew-tap - tap formulae are hand-bumped against upstream releases.
-- apps - TrueNAS catalog fork with its own renovate config.
+- apps - fork of truenas/apps, keeps its own self-hosted renovate.
 - open-webui-pr - fork; updates arrive via upstream syncs.
 - docker_compose-harbor - harbor decommission in progress.
 - blend_images_pipeline, blend_faces_pipeline - near-zero-churn utility scripts.
@@ -38,7 +38,7 @@ Excluded on purpose (no Renovate):
 - convert-xlsx-to-pdf, artifactory-client, build-pipeline-plugin - archived.
 
 Pending migration:
-- claude-memory, claude-memory-ui, apps - self-hosted renovate.yml + RENOVATE_TOKEN PAT, to be retired and switched here (separate ticket).
-- harness-control-center, claude-bridge (+ coder-templates) - dependabot today, migrate via q59v.
+- claude-memory, claude-memory-ui - self-hosted renovate.yml + RENOVATE_TOKEN PAT, to be retired and switched here (separate ticket).
+- harness-control-center, claude-bridge - dependabot today, migrate via q59v.
 
 STATUS: BLOCKED - the Mend Renovate app installation has been inactive account-wide since 2026-01 (no renovate[bot] activity anywhere; last bot PRs merged 2026-01-19). All configs above go live automatically once the installation is re-activated at github.com/settings/installations.
