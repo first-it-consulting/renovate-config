@@ -16,7 +16,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # node 24 required: renovate 44.x engines are ^24.11.0 || ^26.13.0; on node 22 npx silently falls back to 42.99.0.
+          node-version: 24
       # Renovate is intentionally unpinned: validate against the current engine, the same one Mend runs.
+      - name: Renovate version (evidence the engine matches Mend's major)
+        run: npx --yes --package renovate renovate --version
       - name: Validate default.json
         run: npx --yes --package renovate renovate-config-validator --no-global --strict default.json
