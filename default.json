@@ -9,7 +9,9 @@
   ],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
-  "dependencyDashboard": true,
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "labels": [
     "dependencies"
   ],
@@ -39,7 +41,7 @@
     },
     {
       "matchManagers": [
-        "docker"
+        "dockerfile"
       ],
       "matchUpdateTypes": [
         "minor",
