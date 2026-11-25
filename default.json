@@ -5,11 +5,13 @@
   ],
   "timezone": "Europe/Berlin",
   "schedule": [
-    "0 9-18 * * 6,0"
+    "* 9-18 * * 0,6"
   ],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
-  "dependencyDashboard": true,
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "labels": [
     "dependencies"
   ],
@@ -39,7 +41,7 @@
     },
     {
       "matchManagers": [
-        "docker"
+        "dockerfile"
       ],
       "matchUpdateTypes": [
         "minor",
