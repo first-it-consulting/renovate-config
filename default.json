@@ -83,6 +83,15 @@
     },
     {
       "matchManagers": [
+        "gomod"
+      ],
+      "postUpdateOptions": [
+        "gomodTidy",
+        "gomodUpdateImportPaths"
+      ]
+    },
+    {
+      "matchManagers": [
         "cargo"
       ],
       "matchUpdateTypes": [
