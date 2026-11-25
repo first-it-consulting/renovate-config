@@ -9,9 +9,6 @@
   ],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
-  "dependencyDashboard": {
-    "enabled": true
-  },
   "labels": [
     "dependencies"
   ],
