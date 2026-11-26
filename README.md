@@ -25,19 +25,18 @@ Config errors surface as issues via the Renovate Dependency Dashboard in each co
 
 ## Rollout state (2026-11-26)
 
-Mend app: ACTIVE. The account-wide inactive installation was reactivated 2026-11-24; every repo with a renovate.json below now has a Dependency Dashboard from renovate[bot] on the Mend-hosted engine.
+Mend app: ACTIVE. The GitHub installation was never inactive - the portal had Silent mode ON and Automated PRs OFF; both were corrected 2026-11-25 ~00:37 CET. Every repo with a renovate.json below now has a Dependency Dashboard from renovate[bot] on the Mend-hosted engine.
 
 Portal settings (developer.mend.io): Silent mode OFF, Automated PRs ON, Require config file ON, Onboarding PRs OFF. Config-less repos are skipped and settle as `disabled`.
 
-Gotchas:
-- Silent mode (portal) = dry-run: jobs run and logs fill up but nothing is delivered - this was the root cause of the "only hlw ever got PRs" mystery, not the scheduler.
-- The free plan's scheduled queue (1 concurrent job per account) can stall for 30h+ with jobs stuck PENDING. Fix: portal -> repo -> Actions -> "Run Renovate scan" runs immediately; all wave-1 Dashboards appeared this way.
+Gotchas (two separate causes, both seen in 2026-11):
+- Silent mode (portal) = dry-run: jobs run and logs fill up but nothing is delivered. This explains why NO Renovate PRs appeared anywhere from 2026-01 until the 2026-11-25 settings fix.
+- After the fix, "only hlw got a Dashboard" had a different cause: the free plan's scheduled queue (1 concurrent job per account) can stall for 30h+ with jobs stuck PENDING. Fix: portal -> repo -> Actions -> "Run Renovate scan" runs immediately; the remaining wave-1 Dashboards appeared this way.
 
 Consumers (extend this preset, renovate.json on main):
 hlw, llm-gateway-proxy, mysql-galera, fritzbox-skill, duckophila, weather-mcp-server, docker-reg-tool, helm-mcpo, playwright-skill, harness-control-center, claude-bridge, claude-memory (private), claude-memory-ui (private).
 - claude-memory and claude-memory-ui keep their own packageRules on top of the preset, incl. automerge for minor/patch only (automergeType pr, checks-gated); they are NOT on the preset's platformAutomerge whitelist.
 - harness-control-center and claude-bridge migrated off Dependabot (their dependabot.yml deleted in the same PR); claude-bridge also lost its dead dependabot-auto-merge.yml.
-- playwright-skill has the config on main but no Dependency Dashboard yet - first Mend scan pending.
 
 Not using the preset:
 - containers - own .renovaterc.json5 (per-app docker-bake layout).
