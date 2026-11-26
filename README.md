@@ -23,22 +23,33 @@ In a repository's `renovate.json`:
 
 Config errors surface as issues via the Renovate Dependency Dashboard in each consuming repository.
 
-## Rollout state (2026-11-24)
+## Rollout state (2026-11-26)
+
+Mend app: ACTIVE. The account-wide inactive installation was reactivated 2026-11-24; every repo with a renovate.json below now has a Dependency Dashboard from renovate[bot] on the Mend-hosted engine.
+
+Portal settings (developer.mend.io): Silent mode OFF, Automated PRs ON, Require config file ON, Onboarding PRs OFF. Config-less repos are skipped and settle as `disabled`.
+
+Gotchas:
+- Silent mode (portal) = dry-run: jobs run and logs fill up but nothing is delivered - this was the root cause of the "only hlw ever got PRs" mystery, not the scheduler.
+- The free plan's scheduled queue (1 concurrent job per account) can stall for 30h+ with jobs stuck PENDING. Fix: portal -> repo -> Actions -> "Run Renovate scan" runs immediately; all wave-1 Dashboards appeared this way.
 
 Consumers (extend this preset, renovate.json on main):
-hlw, llm-gateway-proxy, mysql-galera, fritzbox-skill, duckophila, weather-mcp-server, docker-reg-tool, helm-mcpo, playwright-skill.
+hlw, llm-gateway-proxy, mysql-galera, fritzbox-skill, duckophila, weather-mcp-server, docker-reg-tool, helm-mcpo, playwright-skill, harness-control-center, claude-bridge, claude-memory (private), claude-memory-ui (private).
+- claude-memory and claude-memory-ui keep their own packageRules on top of the preset, incl. automerge for minor/patch only (automergeType pr, checks-gated); they are NOT on the preset's platformAutomerge whitelist.
+- harness-control-center and claude-bridge migrated off Dependabot (their dependabot.yml deleted in the same PR); claude-bridge also lost its dead dependabot-auto-merge.yml.
+- playwright-skill has the config on main but no Dependency Dashboard yet - first Mend scan pending.
+
+Not using the preset:
+- containers - own .renovaterc.json5 (per-app docker-bake layout).
+- apps - fork of truenas/apps, keeps its own self-hosted renovate.
 
 Excluded on purpose (no Renovate):
 - homebrew-tap - tap formulae are hand-bumped against upstream releases.
-- apps - fork of truenas/apps, keeps its own self-hosted renovate.
 - open-webui-pr - fork; updates arrive via upstream syncs.
 - docker_compose-harbor - harbor decommission in progress.
 - blend_images_pipeline, blend_faces_pipeline - near-zero-churn utility scripts.
 - microduck - fork; deps come from upstream.
 - convert-xlsx-to-pdf, artifactory-client, build-pipeline-plugin - archived.
+- coder-templates - private, dormant (no push since 2025-11); stays on Dependabot, out of the public-repo epic scope.
 
-Pending migration:
-- claude-memory, claude-memory-ui - self-hosted renovate.yml + RENOVATE_TOKEN PAT, to be retired and switched here (separate ticket).
-- harness-control-center, claude-bridge - dependabot today, migrate via q59v.
-
-STATUS: BLOCKED - the Mend Renovate app installation has been inactive account-wide since 2026-01 (no renovate[bot] activity anywhere; last bot PRs merged 2026-01-19). All configs above go live automatically once the installation is re-activated at github.com/settings/installations.
+CI: .github/workflows/validate.yaml runs renovate-config-validator --no-global --strict on node >= 24 (renovate 44.x declares engines ^24.11.0 || ^26.13.0; on node 22 npx silently falls back to 42.99.0, so the workflow prints renovate --version as evidence it validates against Mend's engine).
